@@ -1,9 +1,8 @@
 import { generateToken } from "../../utils";
 import { userModel } from "../user/user.model";
-import { hash, compare } from 'bcrypt';
+import { hash, compare } from "bcrypt";
 
 const saltRounds = 10;
-
 
 export const authController = {
   login: async (req, res) => {
@@ -11,8 +10,8 @@ export const authController = {
     const user = await userModel.findOne({ username }).exec();
     if (!user) {
       return res.status(404).json({ message: "User not found!" });
-    };
-    compare(password, user.password, async(err, result) => {
+    }
+    compare(password, user.password, async (err, result) => {
       if (result) {
         const userData = {
           id: user._id.toString(),
@@ -20,8 +19,7 @@ export const authController = {
           password: user.password,
           displayName: user.displayName,
           isAdmin: user.isAdmin,
-          debt: user.debt,
-          paid: user.paid,
+          expenses: [],
         };
         const token = generateToken(userData);
         return res.status(200).json({
@@ -39,24 +37,22 @@ export const authController = {
     const user = await userModel.findOne({ username }).exec();
     if (user) {
       return res.status(409).json({ message: "User already exists!" });
-    };
-    hash(password, saltRounds, async(err, hash) => {
+    }
+    hash(password, saltRounds, async (err, hash) => {
       const userData = {
         username,
         password: hash,
         displayName,
         isAdmin: false,
-        debt: 0,
-        paid: 0,
-      }
+        expenses: [],
+      };
       const newUser = await userModel.create(userData);
       const resFromDB = {
         ...newUser,
         id: newUser._id.toString(),
-        password: password,
-      }
+      };
       const token = generateToken(resFromDB);
       return res.status(201).json(token);
-    })
-  }
-}
+    });
+  },
+};

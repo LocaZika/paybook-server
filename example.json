@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "username": "admin",
+    "displayName": "administrator",
+    "password": "admin",
+    "expenses": [
+      {"id": 1, "name": "lydo1", "cost": 12, "isPaid": false},
+      {"id": 2, "name": "lydo2", "cost": 15, "isPaid": false}
+    ]
+  },
+  {
+    "id": 2,
+    "username": "admin2",
+    "displayName": "administrator2",
+    "password": "admin2",
+    "expenses": [
+      {"id": 1, "name": "lydo1", "cost": 12, "isPaid": false},
+      {"id": 2, "name": "lydo2", "cost": 15, "isPaid": false}
+    ]
+  }
+]
